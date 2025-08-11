@@ -1,5 +1,5 @@
-// index.js — Guest Assistant (Portico d'Ottavia) - EN + Samantha voice
-// Server: Node + Express. Client: single-page HTML con TTS (Samantha).
+// index.js — Guest Assistant (Portico d'Ottavia) — EN + Samantha voice
+// Server: Node + Express. Client: single-page HTML with TTS (Samantha).
 
 import express from 'express';
 import cors from 'cors';
@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ---------- Apartment data (Portico d’Ottavia) ----------
+// ---------- Apartment data ----------
 const apartment = {
   apartment_id: 'PORTICO1D',
   name: 'Via del Portico d’Ottavia 1D',
@@ -19,62 +19,54 @@ const apartment = {
 
   // Wi-Fi
   wifi_note:
-    "Router on the chest bench to the right of the bed. SSID and password are on the label on the router.",
+    'Router on the chest bench to the right of the bed. SSID and password are on the label on the router.',
   wifi_ssid: 'See router label',
   wifi_password: 'See router label',
 
   // Water / AC / Bathroom
   water_note: 'Cold water is drinkable. Hot water is always available.',
-  ac_note:
-    'Air conditioning via remote control. Please turn it off when you go out.',
-  bathroom_amenities:
-    'Toilet paper, hand soap, bath mat, hairdryer.',
+  ac_note: 'Air conditioning via remote control. Please turn it off when you go out.',
+  bathroom_amenities: 'Toilet paper, hand soap, bath mat, hairdryer.',
   towels_note: '1 large + 1 medium towel per guest. Bed is prepared on arrival.',
 
   // Intercom
-  intercom_note:
-    'At the building door, our unit is the third button from the bottom.',
+  intercom_note: 'At the building door, our unit is the third button from the bottom.',
 
   // Docs
-  registration_note:
-    'Please send photos of the IDs via WhatsApp for guest registration.',
+  registration_note: 'Please send photos of the IDs via WhatsApp for guest registration.',
 
   // Neighborhood
-  eat:
-    "Try Giggetto, Nonna Betta, Ba’Ghetto, Sora Margherita, Il Giardino Romano — all within a few minutes' walk.",
-  drink:
-    "Beppe e i Suoi Formaggi (wine & cheese), Il Goccetto (historic wine bar), Bar del Fico (cocktails).",
+  eat: "Try Giggetto, Nonna Betta, Ba’Ghetto, Sora Margherita, Il Giardino Romano — all within a few minutes' walk.",
+  drink: 'Beppe e i Suoi Formaggi (wine & cheese), Il Goccetto (historic wine bar), Bar del Fico (cocktails).',
   visit:
-    "Portico d’Ottavia, Teatro di Marcello, Great Synagogue & Jewish Museum (closed Sat/Jewish holidays), Piazza Mattei (Turtle Fountain), Tiber Island.",
+    'Portico d’Ottavia, Teatro di Marcello, Great Synagogue & Jewish Museum (closed Sat/Jewish holidays), Piazza Mattei (Turtle Fountain), Tiber Island.',
   transport:
     "Tram 8 at 'Arenula/Cairoli' (to Trastevere or Piazza Venezia). Buses from Largo Argentina.",
   services:
-    "Luggage: Radical Storage near Largo Argentina. Laundry: Via Arenula 47 (7:00–22:00). Pharmacy: Via Arenula 36.",
-  emergency:
-    "Emergency 112 • Radio Taxi +39 06 3570.",
-
+    'Luggage: Radical Storage near Largo Argentina. Laundry: Via Arenula 47 (7:00–22:00). Pharmacy: Via Arenula 36.',
+  emergency: 'Emergency 112 • Radio Taxi +39 06 3570.',
   host_phone: '+39 335 5245756'
 };
 
-// ---------- FAQ templates (intent match by simple keywords) ----------
+// ---------- FAQ templates ----------
 const faqs = [
   {
     intent: 'wifi',
     utterances: ['wifi', 'wi-fi', 'internet', 'password', 'router'],
-    answer_template:
-      `Wi-Fi: {wifi_note}\nWi-Fi network: {wifi_ssid}. Password: {wifi_password}.`
+    answer_template: `Wi-Fi: {wifi_note}
+Wi-Fi network: {wifi_ssid}. Password: {wifi_password}.`
   },
   {
     intent: 'check in',
     utterances: ['check in', 'arrival', 'self check-in', 'access', 'entrance', 'intercom'],
-    answer_template:
-      `Check-in from {checkin_time}.\nIntercom: {intercom_note}\nNeed help? Call {host_phone}.`
+    answer_template: `Check-in from {checkin_time}.
+Intercom: {intercom_note}
+Need help? Call {host_phone}.`
   },
   {
     intent: 'check out',
     utterances: ['check out', 'leave', 'departure'],
-    answer_template:
-      `Check-out by {checkout_time}. Please leave keys as instructed, turn off lights/AC, and close windows.`
+    answer_template: `Check-out by {checkout_time}. Please leave keys as instructed, turn off lights/AC, and close windows.`
   },
   {
     intent: 'water',
@@ -89,39 +81,15 @@ const faqs = [
   {
     intent: 'bathroom',
     utterances: ['bathroom', 'hairdryer', 'towels', 'amenities', 'soap'],
-    answer_template:
-      `Bathroom: {bathroom_amenities}\nTowels: {towels_note}`
+    answer_template: `Bathroom: {bathroom_amenities}
+Towels: {towels_note}`
   },
-  {
-    intent: 'restaurants',
-    utterances: ['restaurant', 'eat', 'food', 'dinner', 'lunch'],
-    answer_template: `{eat}`
-  },
-  {
-    intent: 'drink',
-    utterances: ['bar', 'drink', 'wine', 'aperitivo', 'cocktail'],
-    answer_template: `{drink}`
-  },
-  {
-    intent: 'what to visit',
-    utterances: ['what to visit', 'sight', 'see', 'attraction', 'museum'],
-    answer_template: `{visit}`
-  },
-  {
-    intent: 'transport',
-    utterances: ['transport', 'tram', 'bus', 'metro', 'subway'],
-    answer_template: `{transport}`
-  },
-  {
-    intent: 'services',
-    utterances: ['luggage', 'storage', 'laundry', 'pharmacy', 'sim'],
-    answer_template: `{services}`
-  },
-  {
-    intent: 'emergency',
-    utterances: ['emergency', 'police', 'ambulance', 'taxi'],
-    answer_template: `{emergency}`
-  }
+  { intent: 'restaurants', utterances: ['restaurant', 'eat', 'food', 'dinner', 'lunch'], answer_template: `{eat}` },
+  { intent: 'drink',       utterances: ['bar', 'drink', 'wine', 'aperitivo', 'cocktail'], answer_template: `{drink}` },
+  { intent: 'what to visit', utterances: ['what to visit', 'sight', 'see', 'attraction', 'museum'], answer_template: `{visit}` },
+  { intent: 'transport',   utterances: ['transport', 'tram', 'bus', 'metro', 'subway'],   answer_template: `{transport}` },
+  { intent: 'services',    utterances: ['luggage', 'storage', 'laundry', 'pharmacy', 'sim'], answer_template: `{services}` },
+  { intent: 'emergency',   utterances: ['emergency', 'police', 'ambulance', 'taxi'],      answer_template: `{emergency}` }
 ];
 
 // ---------- OpenAI client ----------
@@ -130,39 +98,35 @@ const OPENAI_MODEL  = process.env.OPENAI_MODEL  || 'gpt-4o-mini';
 const client = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
 
 // ---------- Helpers ----------
-function normalize(s) {
+function normalize(s){
   return (s || '')
     .toLowerCase()
-    .replace(/[\u2010-\u2015\u2212\u2043\u00ad]/g, '-') // varianti di trattino
+    .replace(/[\u2010-\u2015\u2212\u2043\u00ad]/g, '-') // dash variants -> '-'
     .replace(/\s+/g, ' ')
     .trim();
 }
-
-function detectIntent(message) {
+function detectIntent(message){
   const text = normalize(message);
   let best = null, bestScore = 0;
-  for (const f of faqs) {
+  for (const f of faqs){
     let score = 0;
-    for (const u of f.utterances) {
-      if (text.includes(normalize(u))) score++;
-    }
-    if (score > bestScore) { best = f; bestScore = score; }
+    for (const u of f.utterances) if (text.includes(normalize(u))) score++;
+    if (score > bestScore){ best = f; bestScore = score; }
   }
   return bestScore > 0 ? best : null;
 }
-
-function fillTemplate(tpl, apt) {
+function fillTemplate(tpl, apt){
   return tpl.replace(/\{(\w+)\}/g, (_, k) => (apt[k] ?? `{${k}}`));
 }
 
-async function polishToEnglish(raw, userMessage, apt) {
+async function polishToEnglish(raw, userMessage, apt){
   if (!client) return raw;
   const system =
-    "You are a helpful hotel/apartment assistant. " +
-    "ALWAYS reply in clear, simple ENGLISH, even if the user writes in another language. " +
-    "Keep answers concise (max ~120 words unless steps are needed). " +
-    "Do not invent details; only use the provided apartment data.";
-  try {
+    'You are a helpful hotel/apartment assistant. ' +
+    'ALWAYS reply in clear, simple ENGLISH, even if the user writes in another language. ' +
+    'Keep answers concise (~120 words max unless steps are needed). ' +
+    'Do not invent details; only use the provided apartment data.';
+  try{
     const resp = await client.responses.create({
       model: OPENAI_MODEL,
       input: [
@@ -172,7 +136,7 @@ async function polishToEnglish(raw, userMessage, apt) {
       ]
     });
     return resp.output_text || raw;
-  } catch (e) {
+  }catch(e){
     console.error(e);
     return raw;
   }
@@ -185,7 +149,6 @@ app.post('/api/message', async (req, res) => {
   let raw = matched
     ? fillTemplate(matched.answer_template, apartment)
     : "I couldn't find a direct match. Please try a keyword or tap a quick button above.";
-
   const text = await polishToEnglish(raw, message, apartment);
   res.json({ text, intent: matched?.intent || null });
 });
@@ -198,8 +161,11 @@ app.get('/', (_req, res) => {
   ];
 
   const html = `<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google" content="notranslate">
 <title>Guest Help — Portico d’Ottavia 1D</title>
 <style>
   *{box-sizing:border-box}
@@ -214,7 +180,7 @@ app.get('/', (_req, res) => {
   .controls{display:flex;gap:8px;margin-top:8px}
   #voiceBtn{padding:8px 10px;border:1px solid #ddd;background:#fff;border-radius:10px;cursor:pointer;font-size:14px}
   #voiceBtn[aria-pressed="true"]{background:#2b2118;color:#fff;border-color:#2b2118}
-  #voiceSelect{padding:8px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;font-size:14px;max-width:240px}
+  #voiceSelect{padding:8px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;font-size:14px;max-width:260px}
   main{flex:1;padding:12px}
   .msg{max-width:85%;line-height:1.35;border-radius:12px;padding:10px 12px;margin:8px 0;white-space:pre-wrap}
   .msg.wd{background:#fff;border:1px solid #e0e0e0}
@@ -227,7 +193,7 @@ app.get('/', (_req, res) => {
   #sendBtn{padding:12px 14px;border:1px solid #2b2118;background:#2b2118;color:#fff;border-radius:10px;cursor:pointer}
 </style>
 </head>
-<body>
+<body class="notranslate">
   <div class="wrap">
     <header>
       <div class="h-row">
@@ -256,31 +222,33 @@ app.get('/', (_req, res) => {
   const input  = document.getElementById('input');
   const sendBtn= document.getElementById('sendBtn');
 
-  // ---------- Voice (Samantha only, default EN) ----------
+  // ---------- Voice (English only; prefer Samantha) ----------
   let voiceOn = false;
   let voices = [];
   let pickedVoice = null;
   const voiceBtn = document.getElementById('voiceBtn');
   const voiceSelect = document.getElementById('voiceSelect');
 
+  function chooseSamanthaFirst(list){
+    // Prefer Samantha Enhanced/Siri if present
+    const sams = list.filter(v => /samantha/i.test(v.name));
+    if (sams.length) return sams[0];
+    return list[0] || null;
+  }
+
   function loadVoices(){
     voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
-    // Filtra poche opzioni EN e prova a trovare Samantha
     const allowed = voices.filter(v => /en-/i.test(v.lang));
-    const samantha = allowed.find(v => /samantha/i.test(v.name));
-    pickedVoice = samantha || allowed[0] || voices[0] || null;
+    pickedVoice = chooseSamanthaFirst(allowed) || voices[0] || null;
 
+    // Populate select with ONLY English voices (keeps it short)
     voiceSelect.innerHTML = '';
-    const opts = [];
-    if (samantha) opts.push(samantha);
-    for (const v of allowed) if (!/samantha/i.test(v.name)) opts.push(v);
-
-    for (const v of opts){
+    allowed.forEach(v => {
       const o = document.createElement('option');
       o.value = v.name;
       o.textContent = v.name + ' (' + v.lang + ')';
       voiceSelect.appendChild(o);
-    }
+    });
     if (pickedVoice) voiceSelect.value = pickedVoice.name;
   }
   if ('speechSynthesis' in window){
@@ -293,6 +261,9 @@ app.get('/', (_req, res) => {
       const u = new SpeechSynthesisUtterance('Voice enabled.');
       if (pickedVoice) u.voice = pickedVoice;
       u.lang = 'en-US';
+      const resumeHack = setInterval(()=>{
+        if (speechSynthesis.speaking) speechSynthesis.resume(); else clearInterval(resumeHack);
+      }, 200);
       speechSynthesis.cancel();
       speechSynthesis.speak(u);
     }catch(e){ console.warn('Warm-up error', e); }
@@ -315,7 +286,8 @@ app.get('/', (_req, res) => {
   });
   voiceSelect.addEventListener('change', ()=>{
     const name = voiceSelect.value;
-    pickedVoice = (window.speechSynthesis.getVoices() || []).find(v=>v.name===name) || pickedVoice;
+    const list = window.speechSynthesis.getVoices() || [];
+    pickedVoice = list.find(v => v.name === name) || pickedVoice;
   });
 
   // ---------- UI helpers ----------
@@ -359,11 +331,12 @@ app.get('/', (_req, res) => {
     }
   }
   sendBtn.addEventListener('click', send);
-  input.addEventListener('keydown', e => { if (e.key==='Enter') send(); });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
 
   renderWelcome();
 </script>
-</body></html>`;
+</body>
+</html>`;
   res.setHeader('content-type','text/html; charset=utf-8');
   res.end(html);
 });
