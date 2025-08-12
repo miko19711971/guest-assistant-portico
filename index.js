@@ -19,7 +19,7 @@ const apartment = {
   checkin_time: '15:00',
   checkout_time: '11:00',
 
-  // Wi‑Fi
+  // Wi-Fi
   wifi_note:
     "Look at the bed: on the right side there’s a chest bench with the router on top. SSID and password are on the label attached to the router.",
   wifi_ssid: 'See router label',
@@ -43,13 +43,13 @@ const apartment = {
   // Assistance
   host_phone: '+39 335 5245756',
 
-  // Services nearby (from your files)
+  // Services nearby
   supermarkets:
     'Carrefour Express – Via Arenula 41 • Conad City – Via di Santa Maria del Pianto 4 • Punto Simply – Via dei Falegnami 4',
   pharmacies:
     'Farmacia della Reginella – Via della Reginella 25 • Farmacia Internazionale – Largo Arenula 14 (English speaking) • Farmacia San Salvatore – Piazza della Enciclopedia Italiana 53',
   luggage: 'Radical Storage – Largo di Torre Argentina (5 min walk)',
-  laundry: 'Self‑service laundry – Via Arenula 47',
+  laundry: 'Self-service laundry – Via Arenula 47',
   hospital: 'Fatebenefratelli Hospital – Tiber Island',
   atms: 'Unicredit (Largo Arenula 1) • BNL (Via Arenula 41) • Intesa (Via Arenula 27)',
 
@@ -61,7 +61,7 @@ const apartment = {
 
   // Safety & useful numbers
   emergency:
-    "EU Emergency 112 • Police 113 • Ambulance 118 • Fire 115 • English‑speaking doctor +39 06 488 2371 • 24h vet +39 06 660 681",
+    "EU Emergency 112 • Police 113 • Ambulance 118 • Fire 115 • English-speaking doctor +39 06 488 2371 • 24h vet +39 06 660 681",
 
   // Eat / Drink / Shop
   eat:
@@ -79,13 +79,13 @@ const apartment = {
 
   // Experiences & walks
   experiences:
-    "Guided tours in the Jewish Ghetto • Jewish‑Roman food tastings • Evening walk to Campo de’ Fiori & Piazza Navona • Photo walk through hidden squares • Bike ride around Tiber Island.",
+    "Guided tours in the Jewish Ghetto • Jewish-Roman food tastings • Evening walk to Campo de’ Fiori & Piazza Navona • Photo walk through hidden squares • Bike ride around Tiber Island.",
 
   // Day trips
   daytrips:
     "Ostia Antica (~40 min) • Tivoli (Villa d’Este & Hadrian’s Villa ~1h) • Castelli Romani (villages & wine).",
 
-  // Check‑out
+  // Check-out
   checkout_note:
     "Before leaving: turn off lights/AC, close windows, leave keys on the table, gently close the door."
 };
@@ -93,10 +93,10 @@ const apartment = {
 // ---------- FAQ (keyword → template) ----------
 const faqs = [
   { intent: 'wifi', utterances: ['wifi','wi-fi','internet','password','router'],
-    answer_template: `Wi‑Fi: {wifi_note}\nNetwork: {wifi_ssid}. Password: {wifi_password}.` },
+    answer_template: `Wi-Fi: {wifi_note}\nNetwork: {wifi_ssid}. Password: {wifi_password}.` },
 
   { intent: 'check in', utterances: ['check in','arrival','self check-in','access','entrance','intercom','doorbell'],
-    answer_template: `Check‑in from {checkin_time}.\nIntercom: {intercom_note}\nRegistration: {registration_note}\nNeed help? Call {host_phone}.` },
+    answer_template: `Check-in from {checkin_time}.\nIntercom: {intercom_note}\nRegistration: {registration_note}\nNeed help? Call {host_phone}.` },
 
   { intent: 'check out', utterances: ['check out','leave','departure'],
     answer_template: `{checkout_note}` },
@@ -281,7 +281,7 @@ function add(type, txt){
   chatEl.scrollTop=chatEl.scrollHeight;
 }
 function welcome(){
-  add('wd','Welcome! I can help with Wi‑Fi, check‑in/out, water/AC, bathroom, kitchen, restaurants & drinks, shopping, what to visit, hidden gems, experiences, day trips, transport, services, emergency. (English)');
+  add('wd','Hi, I am Samantha, your virtual assistant. Tap a button to get a quick answer.');
   const q=document.createElement('div'); q.className='quick';
   const items=${JSON.stringify(buttons)};
   for(const it of items){
